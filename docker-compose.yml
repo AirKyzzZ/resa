@@ -21,6 +21,7 @@ services:
 
   app:
     build: .
+    init: true
     env_file: .env
     environment:
       PGHOST: db
@@ -31,6 +32,18 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    develop:
+      watch:
+        - action: sync+restart
+          path: ./src
+          target: /app/src
+        - action: sync
+          path: ./public
+          target: /app/public
+        - action: rebuild
+          path: package.json
+        - action: rebuild
+          path: package-lock.json
 
 volumes:
   db-data:

@@ -32,6 +32,8 @@ npm run dev
 
 Seule la base tourne dans Docker, publiée sur le port `PGPORT` (`5433` par défaut). `npm run dev` relance le serveur à chaque modification.
 
+Sans Node.js sur ta machine, `docker compose watch` fait la même chose dans les conteneurs : une modification dans `src/` est copiée dans le conteneur puis l'application redémarre, une modification dans `public/` est copiée sans redémarrage, et l'image est reconstruite si `package.json` ou `package-lock.json` change.
+
 ## Dépannage
 
 - **Port déjà utilisé** (`port is already allocated`, `EADDRINUSE`) : change `PORT` ou `PGPORT` dans `.env`.
