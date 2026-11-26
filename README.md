@@ -34,6 +34,10 @@ Seule la base tourne dans Docker, publiée sur le port `PGPORT` (`5433` par déf
 
 Sans Node.js sur ta machine, `docker compose watch` fait la même chose dans les conteneurs : une modification dans `src/` est copiée dans le conteneur puis l'application redémarre, une modification dans `public/` est copiée sans redémarrage, et l'image est reconstruite si `package.json` ou `package-lock.json` change.
 
+## Déboguer dans VS Code
+
+Lance la base (`docker compose up -d db`), puis `F5` (configuration « npm run dev »), ou ouvre un _JavaScript Debug Terminal_ et tape `npm run dev`. Les points d'arrêt dans `src/services/bookings.service.js` se déclenchent au chargement des réservations (`listBookings`) et à la création d'une réservation (`createBooking`, `checkRules`).
+
 ## Dépannage
 
 - **Port déjà utilisé** (`port is already allocated`, `EADDRINUSE`) : change `PORT` ou `PGPORT` dans `.env`.
