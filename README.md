@@ -1,13 +1,42 @@
 # Résa
 
-Application de réservation des salles du campus.
+Application de réservation des salles du campus (Node.js, Express, PostgreSQL).
 
-## Lancer le projet
+## Prérequis
 
-1. Installer PostgreSQL
-2. Créer l'utilisateur `resa` et la base `resa` (le mot de passe est dans le `.env`)
-3. Exécuter `db/init.sql` dans la base
-4. `npm install`
-5. `npm start`
+- Git
+- Docker et Docker Compose v2
+- Node.js 26, via `nvm` (pour les hooks Git et pour développer hors conteneur)
 
-Ça marche chez moi 🤷
+`npm run doctor` vérifie ton poste.
+
+## Démarrer en 3 commandes
+
+```bash
+git clone https://github.com/AirKyzzZ/resa.git
+cd resa
+cp .env.example .env
+docker compose up --build
+```
+
+Avant le premier lancement, remplace `PGPASSWORD` dans `.env` par un mot de passe à toi (lettres et chiffres uniquement). L'application est ensuite sur <http://localhost:3000>.
+
+## Développer sans reconstruire l'image
+
+```bash
+nvm use
+npm ci
+docker compose up -d db
+npm run dev
+```
+
+Seule la base tourne dans Docker, publiée sur le port `PGPORT` (`5433` par défaut). `npm run dev` relance le serveur à chaque modification.
+
+## Dépannage
+
+- **Port déjà utilisé** (`port is already allocated`, `EADDRINUSE`) : change `PORT` ou `PGPORT` dans `.env`.
+- **Réinitialiser la base** : `docker compose down -v`, puis `docker compose up --build`. `db/init.sql` ne s'exécute que sur un volume vide, c'est aussi la marche à suivre après un changement de `PGPASSWORD` (sinon `password authentication failed`).
+- **Linux, `permission denied` sur Docker** : `sudo usermod -aG docker $USER`, puis déconnecte-toi et reconnecte-toi.
+- **`Variables d'environnement manquantes`** au démarrage : compare ton `.env` avec `.env.example`.
+
+## Équipe
