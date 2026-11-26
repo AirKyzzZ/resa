@@ -46,3 +46,5 @@ Lance la base (`docker compose up -d db`), puis `F5` (configuration « npm run d
 - **`Variables d'environnement manquantes`** au démarrage : compare ton `.env` avec `.env.example`.
 
 ## Équipe
+
+- Maxime (@AirKyzzZ)
